@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import PerformanceBar from './PerformanceBar';
+import ReasoningSection from './ReasoningSection';
 
 const toolCalls = [
   { icon: '🔍', name: 'ToolSearch', summary: '→ found semantic_search', time: '1.1s', active: false },
@@ -131,11 +132,7 @@ const ExpandedTurn = () => {
           </div>
         </section>
 
-        {/* Reasoning */}
-        <section>
-          <PhaseHeader label="Reasoning" />
-          <button className="text-cyan text-[11px] hover:underline pl-1 opacity-80 hover:opacity-100 transition-opacity">▸ view thinking</button>
-        </section>
+        <ReasoningSection />
 
         {/* Agent Response */}
         <div
