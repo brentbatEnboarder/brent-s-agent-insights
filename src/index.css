@@ -6,35 +6,24 @@
   :root {
     --background: 213 40% 11%;
     --foreground: 210 20% 85%;
-
     --card: 214 38% 15%;
     --card-foreground: 210 20% 85%;
-
     --popover: 214 38% 15%;
     --popover-foreground: 210 20% 85%;
-
     --primary: 199 90% 63%;
     --primary-foreground: 213 40% 11%;
-
     --secondary: 214 30% 22%;
     --secondary-foreground: 210 20% 85%;
-
     --muted: 214 25% 20%;
     --muted-foreground: 215 15% 50%;
-
     --accent: 291 47% 71%;
     --accent-foreground: 210 20% 90%;
-
     --destructive: 0 84% 60%;
     --destructive-foreground: 210 40% 98%;
-
     --border: 214 25% 22%;
     --input: 214 25% 22%;
     --ring: 199 90% 63%;
-
     --radius: 0.5rem;
-
-    /* Custom tokens */
     --cyan: 199 90% 63%;
     --cyan-dim: 199 60% 45%;
     --purple: 291 47% 71%;
@@ -42,7 +31,6 @@
     --amber: 31 100% 65%;
     --violet: 262 52% 64%;
     --red-live: 0 72% 55%;
-
     --sidebar-background: 213 40% 11%;
     --sidebar-foreground: 210 20% 85%;
     --sidebar-primary: 199 90% 63%;
@@ -70,15 +58,52 @@
   }
 }
 
-@keyframes pulse-dots {
-  0%, 80%, 100% { opacity: 0.3; }
-  40% { opacity: 1; }
+/* 1. Connected heartbeat — gentle 3s cycle */
+@keyframes heartbeat {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+.animate-heartbeat {
+  animation: heartbeat 3s ease-in-out infinite;
 }
 
-.dot-pulse span:nth-child(1) { animation: pulse-dots 1.4s infinite 0s; }
-.dot-pulse span:nth-child(2) { animation: pulse-dots 1.4s infinite 0.2s; }
-.dot-pulse span:nth-child(3) { animation: pulse-dots 1.4s infinite 0.4s; }
+/* 2. Tool slide-in from left */
+@keyframes slide-in-left {
+  0% { opacity: 0; transform: translateX(-24px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
 
+/* Connector line grow */
+@keyframes grow-line {
+  0% { transform: scaleY(0); }
+  100% { transform: scaleY(1); }
+}
+
+/* 3. Active tool amber glow */
+@keyframes amber-glow {
+  0%, 100% { box-shadow: 0 0 6px 0 hsl(31 100% 65% / 0.2); }
+  50% { box-shadow: 0 0 16px 4px hsl(31 100% 65% / 0.35); }
+}
+.animate-amber-glow {
+  animation: amber-glow 2.5s ease-in-out infinite;
+}
+
+/* 5. Thinking wave dots */
+@keyframes dot-wave {
+  0%, 60%, 100% { opacity: 0.25; transform: translateY(0); }
+  30% { opacity: 1; transform: translateY(-3px); }
+}
+.dot-wave span:nth-child(1) { animation: dot-wave 1.8s ease-in-out infinite 0s; }
+.dot-wave span:nth-child(2) { animation: dot-wave 1.8s ease-in-out infinite 0.2s; }
+.dot-wave span:nth-child(3) { animation: dot-wave 1.8s ease-in-out infinite 0.4s; }
+
+/* 7. Response landing */
+@keyframes land-in {
+  0% { opacity: 0; transform: translateY(12px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* LIVE badge */
 @keyframes live-pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.4; }
