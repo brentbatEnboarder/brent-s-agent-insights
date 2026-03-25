@@ -4,7 +4,7 @@ const Header = () => (
       🧠 BrentsOCTypeAgent
     </h1>
     <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-secondary text-green text-xs font-medium">
-      <span className="w-2 h-2 rounded-full bg-green animate-live-pulse" />
+      <span className="w-2 h-2 rounded-full bg-green animate-heartbeat" />
       Connected
     </div>
   </header>
