@@ -4,91 +4,98 @@
 
 @layer base {
   :root {
-    --background: 213 40% 11%;
-    --foreground: 210 20% 85%;
-    --card: 214 38% 15%;
-    --card-foreground: 210 20% 85%;
-    --popover: 214 38% 15%;
-    --popover-foreground: 210 20% 85%;
-    --primary: 199 90% 63%;
-    --primary-foreground: 213 40% 11%;
-    --secondary: 214 30% 22%;
-    --secondary-foreground: 210 20% 85%;
-    --muted: 214 25% 20%;
-    --muted-foreground: 215 15% 50%;
-    --accent: 291 47% 71%;
-    --accent-foreground: 210 20% 90%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214 25% 22%;
-    --input: 214 25% 22%;
-    --ring: 199 90% 63%;
+    /* Core palette — all HSL */
+    --background: 213 36% 10%;       /* #0F1923 */
+    --foreground: 0 0% 88%;          /* #E0E0E0 */
+
+    --card: 215 36% 14%;             /* #162033 */
+    --card-foreground: 0 0% 88%;
+
+    --popover: 215 36% 14%;
+    --popover-foreground: 0 0% 88%;
+
+    --primary: 199 91% 64%;          /* #4FC3F7 */
+    --primary-foreground: 213 36% 10%;
+
+    --secondary: 215 30% 18%;
+    --secondary-foreground: 0 0% 88%;
+
+    --muted: 215 22% 16%;
+    --muted-foreground: 0 0% 53%;    /* #888888 */
+
+    --accent: 291 47% 71%;           /* #CE93D8 */
+    --accent-foreground: 0 0% 95%;
+
+    --destructive: 4 82% 63%;        /* #EF5350 */
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 100% / 0.06;
+    --input: 0 0% 100% / 0.06;
+    --ring: 199 91% 64%;
+
     --radius: 0.5rem;
-    --cyan: 199 90% 63%;
-    --cyan-dim: 199 60% 45%;
-    --purple: 291 47% 71%;
-    --green: 122 38% 64%;
-    --amber: 31 100% 65%;
+
+    /* Semantic colors */
+    --cyan: 199 91% 64%;             /* #4FC3F7 */
+    --cyan-agent: 207 72% 68%;       /* #64B5F6 */
+    --purple: 291 47% 71%;           /* #CE93D8 */
+    --green: 122 38% 64%;            /* #81C784 */
+    --amber: 33 100% 65%;            /* #FFB74D */
     --violet: 262 52% 64%;
-    --red-live: 0 72% 55%;
-    --sidebar-background: 213 40% 11%;
-    --sidebar-foreground: 210 20% 85%;
-    --sidebar-primary: 199 90% 63%;
-    --sidebar-primary-foreground: 213 40% 11%;
-    --sidebar-accent: 214 30% 22%;
-    --sidebar-accent-foreground: 210 20% 85%;
-    --sidebar-border: 214 25% 22%;
-    --sidebar-ring: 199 90% 63%;
+    --red-live: 4 82% 63%;           /* #EF5350 */
+
+    /* Text hierarchy */
+    --text-primary: 0 0% 88%;        /* #E0E0E0 */
+    --text-secondary: 0 0% 53%;      /* #888888 */
+    --text-muted: 0 0% 40%;          /* #666666 */
+    --divider: 0 0% 20%;             /* #333333 */
+
+    --sidebar-background: 213 36% 10%;
+    --sidebar-foreground: 0 0% 88%;
+    --sidebar-primary: 199 91% 64%;
+    --sidebar-primary-foreground: 213 36% 10%;
+    --sidebar-accent: 215 30% 18%;
+    --sidebar-accent-foreground: 0 0% 88%;
+    --sidebar-border: 0 0% 100% / 0.06;
+    --sidebar-ring: 199 91% 64%;
   }
 }
 
 @layer base {
   * {
-    @apply border-border;
+    border-color: hsl(var(--border));
   }
   body {
     @apply bg-background text-foreground antialiased;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 
 @layer utilities {
   .font-mono {
-    font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+    font-family: 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
   }
 }
 
-/* 1. Connected heartbeat — gentle 3s cycle */
+/* Animations */
 @keyframes heartbeat {
   0%, 100% { opacity: 0.6; }
   50% { opacity: 1; }
 }
-.animate-heartbeat {
-  animation: heartbeat 3s ease-in-out infinite;
-}
+.animate-heartbeat { animation: heartbeat 3s ease-in-out infinite; }
 
-/* 2. Tool slide-in from left */
 @keyframes slide-in-left {
   0% { opacity: 0; transform: translateX(-24px); }
   100% { opacity: 1; transform: translateX(0); }
 }
 
-/* Connector line grow */
-@keyframes grow-line {
-  0% { transform: scaleY(0); }
-  100% { transform: scaleY(1); }
-}
-
-/* 3. Active tool amber glow */
 @keyframes amber-glow {
-  0%, 100% { box-shadow: 0 0 6px 0 hsl(31 100% 65% / 0.2); }
-  50% { box-shadow: 0 0 16px 4px hsl(31 100% 65% / 0.35); }
-}
-.animate-amber-glow {
-  animation: amber-glow 2.5s ease-in-out infinite;
+  0%, 100% { box-shadow: 0 0 8px 0 hsl(33 100% 65% / 0.15); }
+  50% { box-shadow: 0 0 20px 4px hsl(33 100% 65% / 0.25); }
 }
 
-/* 5. Thinking wave dots */
 @keyframes dot-wave {
   0%, 60%, 100% { opacity: 0.25; transform: translateY(0); }
   30% { opacity: 1; transform: translateY(-3px); }
@@ -97,17 +104,13 @@
 .dot-wave span:nth-child(2) { animation: dot-wave 1.8s ease-in-out infinite 0.2s; }
 .dot-wave span:nth-child(3) { animation: dot-wave 1.8s ease-in-out infinite 0.4s; }
 
-/* 7. Response landing */
 @keyframes land-in {
   0% { opacity: 0; transform: translateY(12px); }
   100% { opacity: 1; transform: translateY(0); }
 }
 
-/* LIVE badge */
 @keyframes live-pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.4; }
 }
-.animate-live-pulse {
-  animation: live-pulse 2s ease-in-out infinite;
-}
+.animate-live-pulse { animation: live-pulse 2s ease-in-out infinite; }
