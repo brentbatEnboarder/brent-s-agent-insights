@@ -16,57 +16,52 @@ const segments: Segment[] = [
 
 const totalValue = segments.reduce((s, seg) => s + seg.flex, 0);
 
-interface PerformanceBarProps {
-  animate?: boolean;
-}
-
-const PerformanceBar = ({ animate = true }: PerformanceBarProps) => {
+const PerformanceBar = ({ animate = true }: { animate?: boolean }) => {
   const [activeSegment, setActiveSegment] = useState(animate ? -1 : segments.length);
   const [displayTotal, setDisplayTotal] = useState(animate ? 0 : totalValue);
   const counterRef = useRef<ReturnType<typeof setInterval>>();
 
   useEffect(() => {
     if (!animate) return;
-
-    // Stagger segment reveals — each takes 400ms, sequential
     segments.forEach((_, i) => {
       setTimeout(() => setActiveSegment(i), i * 400);
     });
-
-    // Count up total
-    const totalDuration = segments.length * 400; // time to reveal all
+    const totalDuration = segments.length * 400;
     const steps = 40;
-    const stepTime = totalDuration / steps;
     let step = 0;
     counterRef.current = setInterval(() => {
       step++;
       setDisplayTotal(Math.min(totalValue, (totalValue * step) / steps));
       if (step >= steps) clearInterval(counterRef.current);
-    }, stepTime);
-
+    }, totalDuration / steps);
     return () => clearInterval(counterRef.current);
   }, [animate]);
 
   return (
-    <div className="mt-4 pt-4 border-t border-border/50">
-      <div className="flex items-center gap-1 h-7">
+    <div className="mt-4 pt-4 border-t border-border">
+      <div className="flex items-center gap-[2px] h-[6px]">
         {segments.map((seg, i) => (
           <div
             key={seg.label}
-            className={`${seg.color} rounded-md h-full flex items-center justify-center px-2 min-w-0 overflow-hidden transition-all duration-400 ease-out`}
+            className={`${seg.color} rounded-sm h-full transition-all duration-400 ease-out`}
             style={{
               flex: i <= activeSegment ? seg.flex : 0,
-              opacity: i <= activeSegment ? 1 : 0,
+              opacity: i <= activeSegment ? 0.85 : 0,
               width: i <= activeSegment ? undefined : 0,
-              padding: i <= activeSegment ? undefined : 0,
             }}
-          >
-            <span className="text-[10px] font-medium text-background truncate whitespace-nowrap">
+          />
+        ))}
+      </div>
+      <div className="flex items-center justify-between mt-2">
+        <div className="flex items-center gap-4">
+          {segments.map((seg) => (
+            <span key={seg.label} className="text-[10px] text-text-muted font-mono">
+              <span className={`inline-block w-[6px] h-[6px] rounded-sm ${seg.color} mr-1.5 opacity-85 align-middle`} />
               {seg.label} {seg.duration}
             </span>
-          </div>
-        ))}
-        <span className="ml-2 text-xs font-mono text-muted-foreground flex-shrink-0 tabular-nums">
+          ))}
+        </div>
+        <span className="text-[11px] font-mono text-text-secondary font-medium tabular-nums">
           {displayTotal.toFixed(1)}s
         </span>
       </div>
